@@ -1,5 +1,7 @@
 
-
+   $(document).ready(function(){
+      $(".chosen-select").chosen();
+   });
 const rowData = {
     "1": [
       { col1: "Blood SugarF", col2: "", col3: "mg/dl", col4: "" },
@@ -48,11 +50,11 @@ const rowData = {
   { col1: "TLC", col2: "", col3: "mm³", col4: "" },
   { col1: "Platelates", col2: "", col3: "mm³", col4: "" },
   { col1: "DLC", col2: "", col3: "", col4: "" },
-  { col1: "Neutrophils", col2: "", col3: "", col4: "" },
-  { col1: "Lymphocyte", col2: "", col3: "", col4: "" },
-  { col1: "Esinophils", col2: "", col3: "", col4: "" },
-  { col1: "Monocyte", col2: "", col3: "", col4: "" },
-  { col1: "Basophils", col2: "", col3: "", col4: "" },
+  { col1: "Neutrophils", col2: "", col3: "%", col4: "(45-75)" },
+  { col1: "Lymphocyte", col2: "", col3: "%", col4: "(26-40)" },
+  { col1: "Esinophils", col2: "", col3: "%", col4: "(2-6)" },
+  { col1: "Monocyte", col2: "", col3: "%", col4: "(1-10)" },
+  { col1: "Basophils", col2: "", col3: "%", col4: "(0-1)" },
   { col1: "ESR", col2: "mm/1sthr", col3: "", col4: "" },
 ],
 "8": [
@@ -72,6 +74,13 @@ const rowData = {
   { col1: "Blood Hb%", col2: "", col3: "gm/dl", col4: "" },
   { col1: "Bilirubin Direct", col2: "", col3: "mg/dl", col4: "" },
 ],
+"11": [
+  { col1: "HCV", col2: "Non-Reactive", col3: "HbsAg", col4: "Non-Reactive" },
+  { col1: "WIDAL", col2: "Negative", col3: "CRP", col4: "Negative" },
+  { col1: "Typhoid", col2: "Positive", col3: "mg/dl", col4: "" },
+  { col1: "Dengue", col2: "", col3: "", col4: "" },
+  { col1: "NS1Ag", col2: "Negative", col3: "IgM/ldG", col4: "Negative" },
+]
 
   };
 const printButton = document.getElementById('print-button');
@@ -92,7 +101,7 @@ printButton.addEventListener('click', function () {
     function generateLabNumber() {
         const randomNumber = Math.floor(10000 + Math.random() * 90000); // Generate a random 5-digit number
         const formattedNumber = randomNumber.toString(); // Convert the number to a string
-        const formattedLabNumber = formattedNumber.substr(0, 2) + '-' + formattedNumber.substr(2, 3); // Format as XX-XXX
+        const formattedLabNumber = formattedNumber.substring(0, 2) + '-' + formattedNumber.substring(2, 5);
         return formattedLabNumber;
     }
     const data = generateLabNumber();
@@ -145,18 +154,6 @@ window.addEventListener('afterprint', function () {
 });
 ////////////
 
-// Get the current page URL
-var currentPage = window.location.pathname;
-
-// Get all the navigation links
-var navLinks = document.querySelectorAll('.navbar-nav a');
-
-// Iterate through each link and add the 'active' class if it matches the current page
-navLinks.forEach(function (link) {
-    if (link.getAttribute('href') === currentPage) {
-        link.classList.add('active');
-    }
-});
 
 function showSelectedRows() {
   // Get the selected value from the dropdown
@@ -179,7 +176,7 @@ function showSelectedRows() {
       cell2.innerHTML = `<input type="text" value="${rowData.col2}" onchange="updateCellValue(this, ${selectedValue}, 'col2')" style="border: none; text-align: center;">`;
       cell1.textContent = rowData.col1;
       cell3.textContent = rowData.col3;
-      cell4.innerHTML = `<input type="text" value="${rowData.col4}" onchange="updateCellValue(this, ${selectedValue}, 'col4')" style="border: none; text-align: center;">`;
+      cell4.innerHTML = `<div class="text-center"><input type="text" value="${rowData.col4}" onchange="updateCellValue(this, ${selectedValue}, 'col4')" style="border: none; display: inline-block;"></div>`;
       
     });
   }

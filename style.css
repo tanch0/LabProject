@@ -124,10 +124,26 @@ button#print-button {
 }
 
 .container {
-    width: 80%; /* Adjust width as needed */
-    margin: 0 auto; /* Center the container on the page */
-    padding: 20px; /* Add padding as needed */
-    border: 1px transparent #ccc; /* Add border for visibility */
+    width: 100%; 
+    margin: 0 auto;
+    padding: 20px; 
+    border: 1px transparent #ccc; 
+    background-image: url(BackImage.png);
+    background-position: center;
+    background-size: cover;
+    z-index: 6;
 }
-
+@media print {
+    body {-webkit-print-color-adjust: exact;
+    }
+  }
+  @page {
+      size:A4;
+      margin-left: 0px;
+      margin-right: 0px;
+      margin-top: 0px;
+      margin-bottom: 0px;
+      margin: 0;
+      -webkit-print-color-adjust: exact;
+  }
 
