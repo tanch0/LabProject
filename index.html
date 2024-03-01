@@ -8,28 +8,29 @@
         <link rel="stylesheet" href="style.css">
         <style>
             html, body {
-                height: 100%;
-                margin: 0;
-                padding: 0;
-            }
-    
-            body {
-                display: flex;
-                flex-direction: column;
-            }
-    
-            .container {
-                flex: 1;
-            }
-    
-            footer {
-                margin-top: auto;
-            }
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.container {
+    flex: 1;
+}
+
+footer {
+    margin-top: auto;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}
+
         </style>
 
 </head>
 <header class="d-flex align-items-center">
-    <img src="/logoTransparent.png" alt="Phalgunanda Pathology Clinic Logo" class="logo mr-2" style="width: 150px; height: 150px;">
+    <img src="/logo.png" alt="Phalgunanda Pathology Clinic Logo" class="logo mr-2" style="width: 150px; height: 150px;">
     <div class="text-center">
         <h1 class="mb-0">PHALGUNANDA PATHOLOGY CLINIC</h1>
         <h3 class="mb-4">Birtamod, Jhapa Nepal</h3>
@@ -106,7 +107,9 @@
             <option value="8">Bilirubin</option>
             <option value="9">LFT</option>
             <option value="10">HB</option>
-            <option value="11">Extra</option>
+            <option value="11">Test1</option>
+            <option value="12">Test2</option>
+            <option value="13">Dengue</option>
          </select>
           <table id="dataTable" class="table">
             <thead class="thead-light ml-3">

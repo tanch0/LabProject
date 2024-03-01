@@ -75,9 +75,13 @@ const rowData = {
   { col1: "Bilirubin Direct", col2: "", col3: "mg/dl", col4: "" },
 ],
 "11": [
-  { col1: "HCV", col2: "Non-Reactive", col3: "HbsAg", col4: "Non-Reactive" },
+  { col1: "HCV", col2: "Non-Reactive", col3: "HbsAg", col4: "Non-Reactive" }
+],
+"12": [
   { col1: "WIDAL", col2: "Negative", col3: "CRP", col4: "Negative" },
-  { col1: "Typhoid", col2: "Positive", col3: "mg/dl", col4: "" },
+  { col1: "Typhoid", col2: "Positive", col3: "mg/dl", col4: "" }
+],
+"13":[
   { col1: "Dengue", col2: "", col3: "", col4: "" },
   { col1: "NS1Ag", col2: "Negative", col3: "IgM/ldG", col4: "Negative" },
 ]
