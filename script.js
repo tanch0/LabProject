@@ -10,12 +10,12 @@ const rowData = {
   ],
   "2": [
     { col1: "Physical Examination Report", col2: "", col3: "", col4: "" },
-    { col1: "Color", col2: "", col3: "Transaparency/dl", col4: "" },
+    { col1: "Color", col2: "", col3: "Transaparency", col4: "" },
     { col1: "Chemical Examination", col2: "", col3: "", col4: "" },
     { col1: "PH:", col2: "", col3: "Sugar", col4: "" },
     { col1: "Albumin", col2: "", col3: "", col4: "" },
     { col1: "Microscopic Examination", col2: "", col3: "", col4: "" },
-    { col1: "Pus Cell", col2: "/HPF", col3: "RBC", col4: "/HPF" },
+    { col1: "Pus Cell", col2: "/HPF", col3: "RBC", col4: "/HPF" },        //check this
     { col1: "Calcium Co-Oxalate", col2: "/HPF", col3: "   Epithelial Cell", col4: "/HPF" },
     { col1: " Granuler Cast", col2: "/HPF", col3: "", col4: "" },
   ],
@@ -28,7 +28,6 @@ const rowData = {
   ],
   "4": [
     { col1: "Uric Acid", col2: "", col3: "mg/dl", col4: "" },
-    { col1: "Blood SugarF", col2: "", col3: "mg/dl", col4: "" },
   ],
   "5": [
     { col1: "HIV", col2: "", col3: "TPHA", col4: "" },
@@ -51,8 +50,8 @@ const rowData = {
     { col1: "Color:", col2: "", col3: "Consistency", col4: "" },
     { col1: "Mucos", col2: "", col3: "Blood", col4: "N/L" },
     { col1: "MICROSCOPIC EXAMINATION", col2: "", col3: "", col4: "" },
-    { col1: "PUSS Cell:", col2: "0-0/HPF", col3: "Helmenth", col4: "Not Seen" },
-    { col1: "Protozoo:", col2: "Not Seen", col3: "UFP", col4: "Seen" },
+    { col1: "PUSS Cell:", col2: "0-0/HPF", col3: "Helmenth:", col4: "Not Seen" },
+    { col1: "Protozoo:", col2: "Not Seen", col3: "UFP:", col4: "Seen" },
   ],
   "8": [
     { col1: "CBC", col2: "", col3: "", col4: "" },
@@ -65,7 +64,7 @@ const rowData = {
     { col1: "Esinophils", col2: "", col3: "%", col4: "(2-6)" },
     { col1: "Monocyte", col2: "", col3: "%", col4: "(1-10)" },
     { col1: "Basophils", col2: "", col3: "%", col4: "(0-1)" },
-    { col1: "ESR", col2: "mm/1sthr", col3: "", col4: "" },
+    { col1: "ESR", col2: "mm/1sthr", col3: "", col4: "" },    //check this col2
   ],
   "9": [
     { col1: "Bilirubin Test", col2: "", col3: "", col4: "" },
@@ -82,13 +81,12 @@ const rowData = {
   "11": [
     { col1: "HB Test", col2: "", col3: "", col4: "" },
     { col1: "Blood Hb%", col2: "", col3: "gm/dl", col4: "" },
-    { col1: "Bilirubin Direct", col2: "", col3: "mg/dl", col4: "" },
   ],
   "12": [
     { col1: "HCV", col2: "Non-Reactive", col3: "HbsAg", col4: "Non-Reactive" }
   ],
   "13": [
-    { col1: "WIDAL", col2: "Negative", col3: "CRP", col4: "Negative" },
+    { col1: "WIDAL", col2: "Negative", col3: "", col4: "" },  
     { col1: "Typhoid", col2: "Positive", col3: "mg/dl", col4: "" }
   ],
   "14": [
@@ -105,9 +103,11 @@ const rowData = {
   ],
   "16": [
     { col1: "Blood Sugar R", col2: "", col3: "mg/dl", col4: "(70-140)" },
-    { col1: "NS1Ag", col2: "Negative", col3: "IgM/ldG", col4: "Negative" },
   ],
   "17": [
+  { col1: "CRP", col2: "Negative", col3: "", col4: "" },
+  ],
+  "18": [
     { col1: "", col2: "", col3: "", col4: "" },
     { col1: "", col2: "", col3: "", col4: "" },
     { col1: "", col2: "", col3: "", col4: "" },
@@ -217,45 +217,47 @@ function showSelectedRows() {
       // Make all cells editable
       for (const cell of row.cells) {
         cell.addEventListener('click', function () {
-          const originalValue = this.textContent.trim(); // Trim whitespace
-          const inputType = originalValue.match(/\d+\.?\d*/) ? 'number' : 'text'; // Infer input type based on content
+          if (!this.querySelector('input')) { // Check if there's no input element already
+            const originalValue = this.textContent.trim(); // Trim whitespace
+            const inputType = originalValue.match(/\d+\.?\d*/) ? 'number' : 'text'; // Infer input type based on content
 
-          const inputElement = document.createElement('input');
-          inputElement.type = inputType;
-          inputElement.value = originalValue;
-          inputElement.style.border = 'none'; // Set a basic border if desired
-          inputElement.style.width = this.offsetWidth + 'px'; // Match cell width
-          inputElement.classList.add('editable-cell'); // Optional class for styling
+            const inputElement = document.createElement('input');
+            inputElement.type = inputType;
+            inputElement.value = originalValue;
+            inputElement.style.border = 'none'; // Set a basic border if desired
+            inputElement.style.width = this.offsetWidth + 'px'; // Match cell width
+            inputElement.classList.add('editable-cell'); // Optional class for styling
 
-          this.textContent = ''; // Clear existing content
-          this.appendChild(inputElement);
+            this.textContent = ''; // Clear existing content
+            this.appendChild(inputElement);
 
-          inputElement.focus(); // Focus on the input for immediate editing
+            inputElement.focus(); // Focus on the input for immediate editing
 
-          inputElement.addEventListener('blur', function () { // Handle blur event for saving changes
-            const newValue = this.value.trim();
+            inputElement.addEventListener('blur', function () { // Handle blur event for saving changes
+              const newValue = this.value.trim();
 
-            if (newValue !== originalValue) {
-              // Update cell content and data structure (replace 'dataStructure' with your actual data structure)
-              this.parentNode.textContent = newValue;
-              updateCellValue(dataStructure, selectedValue, this.parentNode.cellIndex, newValue); // Update data structure using cell index
-            } else {
-              // Revert to the original content if there's no change
-              this.parentNode.textContent = originalValue;
-            }
+              if (newValue !== originalValue) {
+                // Update cell content and data structure (replace 'dataStructure' with your actual data structure)
+                this.parentNode.textContent = newValue;
+                updateCellValue(dataStructure, selectedValue, this.parentNode.cellIndex, newValue); // Update data structure using cell index
+              } else {
+                // Revert to the original content if there's no change
+                this.parentNode.textContent = originalValue;
+              }
 
-            this.parentNode.removeChild(this); // Remove the input element
-          });
+              this.parentNode.removeChild(this); // Remove the input element
+            });
 
-          inputElement.addEventListener('keydown', function (event) { // Handle Escape key to cancel editing
-            if (event.key === 'Escape') {
-              this.parentNode.textContent = originalValue;
-              this.parentNode.removeChild(this);
-            }
-          });
+            inputElement.addEventListener('keydown', function (event) { // Handle Escape key to cancel editing
+              if (event.key === 'Escape') {
+                this.parentNode.textContent = originalValue;
+                this.parentNode.removeChild(this);
+              }
+            });
+          }
         });
       }
     });
   }
-
 }
+
